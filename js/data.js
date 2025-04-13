@@ -61,7 +61,7 @@ const addComments = () => {
   for (let i = 0; i <= getRundomInt(Comments.MIN, Comments.MAX); i++) {
     comments.push({
       id: getRundomInt(Id.MIN, Id.MAX),
-      url: `img/avatar-${getRundomInt(Avatar.MIN, Avatar.MAX)}.svg`,
+      avatar: `img/avatar-${getRundomInt(Avatar.MIN, Avatar.MAX)}.svg`,
       message: getRondomElemArr(MESSAGES),
       name: getRondomElemArr(NAMES),
     });
