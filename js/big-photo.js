@@ -1,12 +1,11 @@
+import { isEscapeKey, CLASS_HIDDEN, CLASS_MODAL_OPEN, body } from './util.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const closeModalButton = bigPicture.querySelector('.big-picture__cancel');
-const body = document.body;
-const CLASS_HIDDEN = 'hidden';
-const CLASS_MODAL_OPEN = 'modal-open';
 
-const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+const onDocumentKeydown = () => {
+  if (isEscapeKey) {
     closeModal();
   }
 };
