@@ -10,11 +10,13 @@ const createPreview = (photo) => {
   preview.querySelector('.picture__likes').textContent = photo.likes;
   preview.querySelector('.picture__comments').textContent = photo.comments.length;
 
-  preview.addEventListener('click', (evt) => {
+  const onPreviewClick = (evt) => {
     evt.preventDefault();
 
     renderBigPhoto(photo);
-  });
+  };
+
+  preview.addEventListener('click', onPreviewClick);
 
   return preview;
 };

@@ -683,6 +683,10 @@ main {
   border-radius: 5px;
 }
 
+.text__hashtags:invalid {
+  outline: 3px solid red;
+}
+
 .text__description {
   width: 450px;
   height: 100px;

@@ -6,15 +6,15 @@ const closeModalButton = bigPicture.querySelector('.big-picture__cancel');
 
 const onDocumentKeydown = () => {
   if (isEscapeKey) {
-    closeModal();
+    onCloseButtonClick();
   }
 };
 
-const closeModal = () => {
+const onCloseButtonClick = () => {
   bigPicture.classList.add(CLASS_HIDDEN);
   body.classList.remove(CLASS_MODAL_OPEN);
   document.removeEventListener('keydown', onDocumentKeydown);
-  closeModalButton.removeEventListener('click', closeModal);
+  closeModalButton.removeEventListener('click', onCloseButtonClick);
 };
 
 const createComment = (comment) => {
@@ -33,7 +33,7 @@ const renderBigPhoto = (photo) => {
   const comments = photo.comments;
 
   document.addEventListener('keydown', onDocumentKeydown);
-  closeModalButton.addEventListener('click', closeModal);
+  closeModalButton.addEventListener('click', onCloseButtonClick);
 
   bigPicture.querySelector('.social__comment-count').classList.add(CLASS_HIDDEN);
   bigPicture.querySelector('.comments-loader').classList.add(CLASS_HIDDEN);

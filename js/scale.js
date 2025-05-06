@@ -2,7 +2,7 @@
 const scale = (scaleControls, scaleValue, img) => {
 
   // колбек обработчика зума
-  const onChangeScale = (evt) => {
+  const onScaleChange = (evt) => {
     if (evt.target.classList.contains('scale__control--smaller')) {
       if (scaleValue.value !== '25%') {
         scaleValue.value = (parseFloat(scaleValue.value) - 25) + '%' ;
@@ -16,12 +16,12 @@ const scale = (scaleControls, scaleValue, img) => {
     }
   };
   // обработчик зума
-  scaleControls.addEventListener('click', onChangeScale);
+  scaleControls.addEventListener('click', onScaleChange);
 
   // возвращаем объект с методом для удаления обработчика
   return {
     removeScaleHandler: () => {
-      scaleControls.removeEventListener('click', onChangeScale);
+      scaleControls.removeEventListener('click', onScaleChange);
     },
   };
 };

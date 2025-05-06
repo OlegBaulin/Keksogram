@@ -1,6 +1,7 @@
 import { CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey } from './util.js';
 import { scale } from './scale.js';
 import { effects, changeLevelEffect } from './effects.js';
+import { addValidationHandlers, removeValidationHandlers } from './validate.js';
 
 // контрол загрузки фото
 const upload = document.querySelector('#upload-file');
@@ -39,7 +40,7 @@ const onUploadChange = () => {
     },
   });
   // колбек обработчика слайдера
-  const onChangeSlider = (values, handle) => {
+  const onSliderChange = (values, handle) => {
     const value = values[handle];
     effectValue.value = value;
     const typeEffect = preview.classList.value.replace('effects__preview--', '');
@@ -48,30 +49,31 @@ const onUploadChange = () => {
   }
 
   // обработчик слайдера
-  slider.noUiSlider.on('update', onChangeSlider);
+  slider.noUiSlider.on('update', onSliderChange);
 
   // кнопка закрытия формы
   const closeUploadOverlay = document.querySelector('#upload-cancel');
   // колбек обработчика кнопки закрытия формы
-  const onCloseUploadOverlay = () => {
+  const onCloseButtonClick = () => {
     resetSetings();
     uploadOverlay.classList.add(CLASS_HIDDEN);
     body.classList.remove(CLASS_MODAL_OPEN);
-    upload.value = '';
     slider.noUiSlider.destroy();
-    closeUploadOverlay.removeEventListener('click', onCloseUploadOverlay);
+    closeUploadOverlay.removeEventListener('click', onCloseButtonClick);
     document.removeEventListener('keydown', onDocumentKeydown);
     scaleRemoveListener.removeScaleHandler();
     effectsRemoveListener.removeEffectsHandler();
+    removeValidationHandlers();
   }
   // обработчик кнопки закрытия формы
-  closeUploadOverlay.addEventListener('click', onCloseUploadOverlay);
+  closeUploadOverlay.addEventListener('click', onCloseButtonClick);
   // колбек обработчика Esc
   const onDocumentKeydown = (evt) => {
     const inputHashtags = document.querySelector('.text__hashtags');
-    if (inputHashtags !== document.activeElement) {
+    const inputComment = document.querySelector('.text__description');
+    if (inputHashtags !== document.activeElement && inputComment !== document.activeElement) {
       if (isEscapeKey(evt.key)) {
-        onCloseUploadOverlay();
+        onCloseButtonClick();
       }
     }
   };
@@ -83,6 +85,9 @@ const onUploadChange = () => {
 
   // применение эффектов
   const effectsRemoveListener = effects(effectsControls, effectValue, preview, slider);
+
+  // обработчики валидации
+  addValidationHandlers();
 
   // показываем форму и отключаем скролл у body
   uploadOverlay.classList.remove(CLASS_HIDDEN);
@@ -96,6 +101,7 @@ const resetSetings = () => {
   preview.style.filter = '';
   preview.classList = '';
   scaleValue.value = '100%';
+  upload.value = '';
 }
 
 // обработчик контрола

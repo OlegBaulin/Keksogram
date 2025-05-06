@@ -1,3 +1,4 @@
+const CLASS_VISUALLY_HIDDEN = 'visually-hidden';
 // объект с настройками слайдера
 const sliderOptions = {
   'chrome': {
@@ -45,18 +46,18 @@ const sliderOptions = {
 const effects = (effectsControls, effectValue, preview, slider) => {
 
   const settingEffect = (value) => {
-    slider.classList.remove('visually-hidden');
+    slider.classList.remove(CLASS_VISUALLY_HIDDEN);
     preview.classList = '';
     preview.classList.add(`effects__preview--${value}`);
     slider.noUiSlider.updateOptions(sliderOptions[value]);
     effectValue.value = slider.noUiSlider.get();
   };
 
-  const onChangeEffect = (evt) => {
+  const onEffectChange = (evt) => {
     const value = evt.target.value;
     switch (value) {
       case 'none':
-        slider.classList.add('visually-hidden');
+        slider.classList.add(CLASS_VISUALLY_HIDDEN);
         preview.classList = '';
         preview.classList.add(`effects__preview--${value}`);
         preview.style.filter = 'none';
@@ -82,12 +83,12 @@ const effects = (effectsControls, effectValue, preview, slider) => {
   };
 
   // обработчик контролов эффектов
-  effectsControls.addEventListener('change', onChangeEffect);
+  effectsControls.addEventListener('change', onEffectChange);
 
   // возвращаем объект с методом для удаления обработчика
   return {
     removeEffectsHandler: () => {
-      effectsControls.removeEventListener('change', onChangeEffect);
+      effectsControls.removeEventListener('change', onEffectChange);
     },
   };
 };
