@@ -1,7 +1,18 @@
 const getRundomInt = _.random;// eslint-disable-line
 const CLASS_HIDDEN = 'hidden';
 const CLASS_MODAL_OPEN ='modal-open';
+const CLOSE = 'Закрыть';
 const body = document.body;
+
+const METHODS = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const MODALS = {
+  ERROR: 'error',
+  SUCCESS: 'success',
+};
 
 const Keys = {
   ESC: 'Esc',
@@ -9,7 +20,7 @@ const Keys = {
 };
 
 const isEscapeKey = (key) => {
-  return key === Keys.ESC || key === Keys.ESCAPE
+  return key === Keys.ESC || key === Keys.ESCAPE;
 };
 
 const stringCount = (string, count) => {
@@ -28,10 +39,10 @@ const stringCount = (string, count) => {
   }
 
   return string.length <= count;
-}
+};
 
 const getRondomElemArr = (arr) => {
-  return arr[getRundomInt(0, arr.length -1)]
-}
+  return arr[getRundomInt(0, arr.length -1)];
+};
 
-export { getRundomInt, stringCount, getRondomElemArr, CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey };
+export { getRundomInt, stringCount, getRondomElemArr, CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey, CLOSE, METHODS, MODALS };

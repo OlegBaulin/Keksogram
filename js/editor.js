@@ -1,26 +1,29 @@
-import { CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey } from './util.js';
+import { CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey, MODALS, METHODS } from './util.js';
 import { scale } from './scale.js';
 import { effects, changeLevelEffect } from './effects.js';
 import { addValidationHandlers, removeValidationHandlers } from './validate.js';
+import { showModal } from './modal.js';
+import { request } from './fetch.js';
 
-// контрол загрузки фото
-const upload = document.querySelector('#upload-file');
 // форма редактирования изображения
-const uploadOverlay = document.querySelector('.img-upload__overlay');
+const form = document.querySelector('.img-upload__form');
+const uploadOverlay = form.querySelector('.img-upload__overlay');
+// контрол загрузки фото
+const upload = form.querySelector('#upload-file');
 // превью изображения
 const preview = uploadOverlay.querySelector('.img-upload__preview img');
 // контролы зума
-const scaleControls = document.querySelector('.img-upload__scale');
-const scaleValue = document.querySelector('.scale__control--value');
+const scaleControls = uploadOverlay.querySelector('.img-upload__scale');
+const scaleValue = uploadOverlay.querySelector('.scale__control--value');
 
 // контролы эффектов
-const effectsControls = document.querySelector('.img-upload__effects');
-const effectValue = document.querySelector('.effect-level__value');
+const effectsControls = uploadOverlay.querySelector('.img-upload__effects');
+const effectValue = uploadOverlay.querySelector('.effect-level__value');
 
 // колбек обработчика контрола загрузки фото
 const onUploadChange = () => {
   // слайдер эффектов
-  const slider = document.querySelector('.img-upload__effect-level');
+  const slider = uploadOverlay.querySelector('.img-upload__effect-level');
   slider.classList.add('visually-hidden');
   // eslint-disable-next-line no-undef
   noUiSlider.create(slider, {
@@ -52,7 +55,7 @@ const onUploadChange = () => {
   slider.noUiSlider.on('update', onSliderChange);
 
   // кнопка закрытия формы
-  const closeUploadOverlay = document.querySelector('#upload-cancel');
+  const closeUploadOverlay = uploadOverlay.querySelector('#upload-cancel');
   // колбек обработчика кнопки закрытия формы
   const onCloseButtonClick = () => {
     resetSetings();
@@ -69,8 +72,8 @@ const onUploadChange = () => {
   closeUploadOverlay.addEventListener('click', onCloseButtonClick);
   // колбек обработчика Esc
   const onDocumentKeydown = (evt) => {
-    const inputHashtags = document.querySelector('.text__hashtags');
-    const inputComment = document.querySelector('.text__description');
+    const inputHashtags = uploadOverlay.querySelector('.text__hashtags');
+    const inputComment = uploadOverlay.querySelector('.text__description');
     if (inputHashtags !== document.activeElement && inputComment !== document.activeElement) {
       if (isEscapeKey(evt.key)) {
         onCloseButtonClick();
@@ -88,6 +91,29 @@ const onUploadChange = () => {
 
   // обработчики валидации
   addValidationHandlers();
+
+  // отправляем данные из формы
+  const onError = () => {
+    showModal(MODALS.ERROR);
+  };
+
+  const onSuccess = () => {
+    showModal(MODALS.SUCCESS);
+  };
+
+  const onSubmitForm = (evt) => {
+    evt.preventDefault();
+
+    const body = new FormData(form);
+
+    request(onSuccess, onError, METHODS.POST, body);
+    form.reset();
+    onCloseButtonClick();
+    form.removeEventListener('submit', onSubmitForm);
+  };
+
+  // обработчик отправки формы
+  form.addEventListener('submit', onSubmitForm);
 
   // показываем форму и отключаем скролл у body
   uploadOverlay.classList.remove(CLASS_HIDDEN);
