@@ -1,4 +1,6 @@
-const getRundomInt = _.random;// eslint-disable-line
+/* global _:readonly */
+const getRandomInt = _.random;
+const getShuffleArr = _.shuffle;
 const CLASS_HIDDEN = 'hidden';
 const CLASS_MODAL_OPEN ='modal-open';
 const CLOSE = 'Закрыть';
@@ -41,8 +43,8 @@ const stringCount = (string, count) => {
   return string.length <= count;
 };
 
-const getRondomElemArr = (arr) => {
-  return arr[getRundomInt(0, arr.length -1)];
+const getRandomElemArr = (arr) => {
+  return arr[getRandomInt(0, arr.length -1)];
 };
 
-export { getRundomInt, stringCount, getRondomElemArr, CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey, CLOSE, METHODS, MODALS };
+export { getRandomInt, stringCount, getRandomElemArr, getShuffleArr, CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey, CLOSE, METHODS, MODALS };
