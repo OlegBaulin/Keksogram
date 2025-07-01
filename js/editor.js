@@ -5,6 +5,7 @@ import { addValidationHandlers, removeValidationHandlers } from './validate.js';
 import { showModal } from './modal.js';
 import { request } from './fetch.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 // форма редактирования изображения
 const form = document.querySelector('.img-upload__form');
 const uploadOverlay = form.querySelector('.img-upload__overlay');
@@ -22,6 +23,27 @@ const effectValue = uploadOverlay.querySelector('.effect-level__value');
 
 // колбек обработчика контрола загрузки фото
 const onUploadChange = () => {
+  const photo = upload.files[0];
+  const photoName = photo.name.toLowerCase();
+  const previews = uploadOverlay.querySelectorAll('.effects__preview');
+
+  const matches = FILE_TYPES.some((it) => {
+    return photoName.endsWith(it);
+  });
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.src = reader.result;
+      previews.forEach((preview) => {
+        preview.style.backgroundImage = `url(${reader.result})`;
+      });
+    });
+
+    reader.readAsDataURL(photo);
+  }
+
   // слайдер эффектов
   const slider = uploadOverlay.querySelector('.img-upload__effect-level');
   slider.classList.add('visually-hidden');
