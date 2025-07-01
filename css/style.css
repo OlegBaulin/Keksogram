@@ -534,6 +534,8 @@ main {
 
   width: 495px;
   height: 33px;
+  padding-right: 14px;
+  padding-left: 14px;
 
   font-size: 12px;
   line-height: 42px;
@@ -1406,4 +1408,27 @@ main {
 
 .hidden {
   display: none;
+}
+
+.noUi-connect {
+  margin-top: 10px;
+  height: 3px;
+  background-color: #ffe753;
+}
+
+.noUi-handle::before,
+.noUi-handle::after {
+  display: none;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 20px;
+  height: 20px;
+  top: 2px;
+  right: -10px;
+  background-color: #ffe753;
+  border: none;
+  border-radius: 50%;
+  box-shadow: none;
+  cursor: pointer;
 }

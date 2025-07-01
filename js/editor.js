@@ -51,6 +51,7 @@ const onUploadChange = () => {
   noUiSlider.create(slider, {
     start: 1,
     step: 0.1,
+    connect: 'lower',
     range: {
       'min': 0,
       'max': 1,
