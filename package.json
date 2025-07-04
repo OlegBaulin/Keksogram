@@ -14,6 +14,7 @@
     "browser-sync": "2.26.14",
     "eslint": "7.18.0",
     "eslint-config-htmlacademy": "2.0.0",
+    "gh-pages": "^6.3.0",
     "webpack": "5.99.9",
     "webpack-cli": "6.0.1"
   },
@@ -21,6 +22,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "browser-sync start --server \"build/\" --no-ui --files \"source/**/*.js\"",
+    "deploy": "gh-pages -d build",
     "test": "eslint source/js/"
   },
   "engines": {
