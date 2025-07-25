@@ -1,17 +1,23 @@
+const ScaleConfig = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100,
+  PERCENT_DIVISOR: 100,
+};
 // зум
 const scale = (scaleControls, scaleValue, img) => {
 
   // колбек обработчика зума
   const onScaleChange = (evt) => {
     if (evt.target.classList.contains('scale__control--smaller')) {
-      if (scaleValue.value !== '25%') {
-        scaleValue.value = (parseFloat(scaleValue.value) - 25) + '%' ;
-        img.style.transform = `scale(${(parseFloat(scaleValue.value)) / 100})`;
+      if (scaleValue.value !== `${ScaleConfig.MIN}%`) {
+        scaleValue.value = (parseFloat(scaleValue.value) - ScaleConfig.STEP) + '%' ;
+        img.style.transform = `scale(${(parseFloat(scaleValue.value)) / ScaleConfig.PERCENT_DIVISOR})`;
       }
     } else if (evt.target.classList.contains('scale__control--bigger')) {
-      if (scaleValue.value !== '100%') {
-        scaleValue.value = (parseFloat(scaleValue.value) + 25) + '%' ;
-        img.style.transform = `scale(${(parseFloat(scaleValue.value)) / 100})`;
+      if (scaleValue.value !== `${ScaleConfig.MAX}%`) {
+        scaleValue.value = (parseFloat(scaleValue.value) + ScaleConfig.STEP) + '%' ;
+        img.style.transform = `scale(${(parseFloat(scaleValue.value)) / ScaleConfig.PERCENT_DIVISOR})`;
       }
     }
   };

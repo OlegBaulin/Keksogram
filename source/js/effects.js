@@ -43,7 +43,7 @@ const sliderOptions = {
   },
 };
 
-const effects = (effectsControls, effectValue, preview, slider) => {
+const setupEffects = (effectsControls, effectValue, preview, slider) => {
 
   const settingEffect = (value) => {
     slider.classList.remove(CLASS_VISUALLY_HIDDEN);
@@ -62,22 +62,8 @@ const effects = (effectsControls, effectValue, preview, slider) => {
         preview.classList.add(`effects__preview--${value}`);
         preview.style.filter = 'none';
         break;
-      case 'chrome':
-        settingEffect(value);
-        break;
-      case 'sepia':
-        settingEffect(value);
-        break;
-      case 'marvin':
-        settingEffect(value);
-        break;
-      case 'phobos':
-        settingEffect(value);
-        break;
-      case 'heat':
-        settingEffect(value);
-        break;
       default:
+        settingEffect(value);
         break;
     }
   };
@@ -94,27 +80,25 @@ const effects = (effectsControls, effectValue, preview, slider) => {
 };
 
 const changeLevelEffect = (value, typeEffect, preview) => {
-  switch (typeEffect) {
-    case 'none':
-      return;
-    case 'chrome':
-      preview.style.filter = `grayscale(${value})`;
-      break;
-    case 'sepia':
-      preview.style.filter = `sepia(${value})`;
-      break;
-    case 'marvin':
-      preview.style.filter = `invert(${value}%)`;
-      break;
-    case 'phobos':
-      preview.style.filter = `blur(${value}px)`;
-      break;
-    case 'heat':
-      preview.style.filter = `brightness(${value})`;
-      break;
-    default:
-      break;
+
+  if (typeEffect === 'none') {
+    return;
   }
+
+  const filterEffects = {
+    'chrome': (level) => `grayscale(${level})`,
+    'sepia': (level) => `sepia(${level})`,
+    'marvin': (level) => `invert(${level}%)`,
+    'phobos': (level) => `blur(${level}px)`,
+    'heat': (level) => `brightness(${level})`,
+  };
+
+  const generateFilter = filterEffects[typeEffect];
+
+  if (generateFilter) {
+    preview.style.filter = generateFilter(value);
+  }
+
 };
 
-export { effects, changeLevelEffect };
+export { setupEffects, changeLevelEffect };

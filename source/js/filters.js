@@ -39,10 +39,10 @@ const addClassActiveBtn = (btn) => {
 };
 
 const removeClassActiveBtn = () => {
-  const buttons = formFilters.children;
-
-  for (const btn of buttons) {
-    btn.classList.remove(CLASS_ACTIVE_BTN);
+  const activeButton = formFilters.querySelector(`.${CLASS_ACTIVE_BTN}`);
+  
+  if (activeButton) {
+    activeButton.classList.remove(CLASS_ACTIVE_BTN);
   }
 };
 

@@ -1,6 +1,6 @@
 import { CLASS_HIDDEN, CLASS_MODAL_OPEN, body, isEscapeKey, MODALS, METHODS } from './util.js';
 import { scale } from './scale.js';
-import { effects, changeLevelEffect } from './effects.js';
+import { setupEffects, changeLevelEffect } from './effects.js';
 import { addValidationHandlers, removeValidationHandlers } from './validate.js';
 import { showModal } from './modal.js';
 import { request } from './fetch.js';
@@ -110,7 +110,7 @@ const onUploadChange = () => {
   const scaleRemoveListener = scale(scaleControls, scaleValue, preview);
 
   // применение эффектов
-  const effectsRemoveListener = effects(effectsControls, effectValue, preview, slider);
+  const effectsRemoveListener = setupEffects(effectsControls, effectValue, preview, slider);
 
   // обработчики валидации
   addValidationHandlers();

@@ -63,18 +63,20 @@ const renderBigPhoto = (photo) => {
     bigPicture.classList.add(CLASS_HIDDEN);
     body.classList.remove(CLASS_MODAL_OPEN);
     document.removeEventListener('keydown', onDocumentKeydown);
-    closeModalButton.removeEventListener('click', closeBigPhoto);
+    closeModalButton.removeEventListener('click', onCloseModalButtonClick);
     loadMoreButton.removeEventListener('click', onLoadMoreButtonClick);
   };
 
-  function onDocumentKeydown(evt) {
+  const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt.key)) {
       closeBigPhoto();
     }
   }
 
+  const onCloseModalButtonClick = () => closeBigPhoto();
+
   document.addEventListener('keydown', onDocumentKeydown);
-  closeModalButton.addEventListener('click', closeBigPhoto);
+  closeModalButton.addEventListener('click', onCloseModalButtonClick);
   loadMoreButton.addEventListener('click', onLoadMoreButtonClick);
 
   renderCommentsPortion();

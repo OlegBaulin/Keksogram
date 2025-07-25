@@ -24,9 +24,7 @@ const createPreview = (photo) => {
 const renderPreview = (photos) => {
   const fragment = document.createDocumentFragment();
 
-  for (let i = 0; i < photos.length; i++) {
-    fragment.appendChild(createPreview(photos[i]));
-  }
+  photos.forEach((photo) => fragment.appendChild(createPreview(photo)));
 
   photoList.appendChild(fragment);
 };
